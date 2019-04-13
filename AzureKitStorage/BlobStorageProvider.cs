@@ -21,10 +21,18 @@ namespace AzureKitStorage
             return container;     
         }
 
-        public async Task<Uri> UploadBlob(string containerName, string blobName, string filename) 
+        public async Task<Uri> UploadLargeFile(string containerName, string blobName, string filename) 
         { 
             var container = await this.GetContainerAsync(containerName);
             var blobObj = container.GetBlockBlobReference(blobName);            
+            await blobObj.UploadFromFileAsync(filename);
+            return blobObj.Uri;
+        }
+
+        public async Task<Uri> UploadFile(string containerName, string blobName, string filename) 
+        { 
+            var container = await this.GetContainerAsync(containerName);
+            var blobObj = container.GetPageBlobReference(blobName);            
             await blobObj.UploadFromFileAsync(filename);
             return blobObj.Uri;
         }
