@@ -40,18 +40,6 @@ namespace AzureKitStorage
             var blobObj = container.GetPageBlobReference(blobName);            
             await blobObj.UploadFromFileAsync(filename);
             return blobObj.Uri;
-        }
-        
-        public void GetAccessUrl(string blobName, int accessTimeOut = 5) { 
-
-            SharedAccessBlobPolicy defaultAccessPolicy = new SharedAccessBlobPolicy()
-            {
-                SharedAccessExpiryTime = DateTime.UtcNow.AddMinutes(accessTimeOut),
-                Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Create
-            };
-
-            var blob =this.GetPageContainer(blobName);
-            var sasBlobToken = blob.GetSharedAccessSignature(defaultAccessPolicy);      
-        }
+        }     
     }
 }
