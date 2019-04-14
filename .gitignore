@@ -1,3 +1,12 @@
 
 AzureKitStorage/bin
 AzureKitStorage/obj
+AzureStorageKit.UnitTest/obj/
+AzureBusKit/obj/
+AzureBusKit/bin/
+*.cs
+AzureStorageKit.UnitTest/bin/
+AzureBusKit.UnitTest/obj/
+.vs/
+AzureBusKit.UnitTest/bin/Debug/netcoreapp2.2/AzureBusKit.UnitTest.runtimeconfig.dev.json
+AzureBusKit.UnitTest/bin/
