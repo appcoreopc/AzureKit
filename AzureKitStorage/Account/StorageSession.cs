@@ -7,9 +7,11 @@ namespace AzureKitStorage.Account
 {
     public class StorageSession : IStorageSession {
 
-        public CloudStorageAccount CreateStorageProvider(string connection) { 
-
-                return CloudStorageAccount.Parse(connection);      
+        private CloudStorageAccount storage; 
+        public CloudStorageAccount CreateStorageProvider(string connection)         
+        {       
+            return CloudStorageAccount.Parse(connection);      
         }
+      
     }
 }
