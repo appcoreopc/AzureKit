@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.WindowsAzure.Storage.Blob;
-using Microsoft.WindowsAzure.Storage;
 using System.Threading.Tasks;
 
 namespace AzureKitStorage
@@ -11,7 +10,6 @@ namespace AzureKitStorage
 
         private CloudBlobContainer container;
 
-        
         public BlobStorageProvider(CloudBlobClient account)
         {
             this.account = account;
