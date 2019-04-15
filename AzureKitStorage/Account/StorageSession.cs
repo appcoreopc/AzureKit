@@ -2,6 +2,7 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.File;
 using Microsoft.WindowsAzure.Storage.Queue;
+using Microsoft.WindowsAzure.Storage.Table;
 using System.Threading.Tasks;
 
 namespace AzureKitStorage.Account
@@ -26,6 +27,21 @@ namespace AzureKitStorage.Account
             await container.CreateIfNotExistsAsync();
             return container;
         }
+
+        public static async Task<CloudTable> CreateTableStorageAsync(this CloudStorageAccount cloudStorageAccount, string tableName)
+        {
+            var container = cloudStorageAccount.CreateCloudTableClient().GetTableReference(tableName);
+            await container.CreateIfNotExistsAsync();
+            return container;
+        }
+
+        public static async Task<CloudQueue> CreateQueueStorageAsync(this CloudStorageAccount cloudStorageAccount, string queueName)
+        {
+            var container = cloudStorageAccount.CreateCloudQueueClient().GetQueueReference(queueName);
+            await container.CreateIfNotExistsAsync();
+            return container;
+        }
+
 
         public static async Task<CloudQueue> CreateStorageQueuAsync(this CloudStorageAccount cloudStorageAccount, string queueName)
         {
