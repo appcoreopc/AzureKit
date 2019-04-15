@@ -7,15 +7,13 @@ namespace AzureKitStorage
     public class BlobStorageProvider
     {
         private readonly ICloudBlob storageObject;
-
-        private CloudBlobContainer container;
-
+                
         public BlobStorageProvider(ICloudBlob account)
         {
             this.storageObject = account;
         }
 
-        public async Task<Uri> UploadFileAsync(string containerName, string blobName, string filename)
+        public async Task<Uri> UploadFileAsync(string filename)
         {
             await this.storageObject.UploadFromFileAsync(filename);
             return this.storageObject.Uri;
@@ -25,6 +23,23 @@ namespace AzureKitStorage
         {
             await this.storageObject.DownloadToFileAsync(filename, System.IO.FileMode.OpenOrCreate);
             return this.storageObject.Uri;
+        }
+
+        public async Task<bool> DeleteAsync(string filename)
+        {
+            return await this.storageObject.DeleteIfExistsAsync();
+        }
+
+        public string GetAccessUrl(string containerName, string blobName)
+        {
+            SharedAccessBlobPolicy defaultAccessPolicy = new SharedAccessBlobPolicy()
+            {
+                SharedAccessExpiryTime = DateTime.UtcNow.AddMinutes(5),
+                Permissions = SharedAccessBlobPermissions.Read | SharedAccessBlobPermissions.Write | SharedAccessBlobPermissions.Create
+            };
+
+            var sharedAccess = this.storageObject.GetSharedAccessSignature(defaultAccessPolicy);
+            return this.storageObject.Uri.AbsoluteUri + sharedAccess;
         }
     }
 }
