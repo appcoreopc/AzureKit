@@ -24,6 +24,6 @@ public class QueueStorageProvider
 
     public async Task<IEnumerable<CloudQueueMessage>> GetMessages(int count) => await this.cloudQueue.GetMessagesAsync(count);
 
-    public async Task<IEnumerable<CloudQueueMessage>> GetMessages(int count, TimeSpan? timeout) => await this.cloudQueue.GetMessageAsync(count, timeout. );
+    public async Task<IEnumerable<CloudQueueMessage>> GetMessages(int count, TimeSpan? timeout) => await this.cloudQueue.GetMessagesAsync(count, timeout, null, null);
 
 }
