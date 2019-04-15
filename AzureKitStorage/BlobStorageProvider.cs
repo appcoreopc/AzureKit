@@ -6,40 +6,25 @@ namespace AzureKitStorage
 {
     public class BlobStorageProvider
     {
-        private readonly CloudBlobClient account; 
+        private readonly ICloudBlob storageObject;
 
         private CloudBlobContainer container;
 
-        public BlobStorageProvider(CloudBlobClient account)
+        public BlobStorageProvider(ICloudBlob account)
         {
-            this.account = account;
+            this.storageObject = account;
         }
 
-        private async Task<CloudBlobContainer> CreateContainerAsync(string name)
-        { 
-            this.container = this.account.GetContainerReference(name);  
-            await this.container.CreateIfNotExistsAsync(); 
-            return this.container;     
+        public async Task<Uri> UploadFileAsync(string containerName, string blobName, string filename)
+        {
+            await this.storageObject.UploadFromFileAsync(filename);
+            return this.storageObject.Uri;
         }
 
-        private CloudPageBlob GetPageContainer(string blobName) { 
-            return container.GetPageBlobReference(blobName);  
+        public async Task<Uri> DownloadAsync(string filename)
+        {
+            await this.storageObject.DownloadToFileAsync(filename, System.IO.FileMode.OpenOrCreate);
+            return this.storageObject.Uri;
         }
-
-        public async Task<Uri> UploadLargeFile(string containerName, string blobName, string filename) 
-        { 
-            var container = await this.CreateContainerAsync(containerName);
-            var blobObj = container.GetBlockBlobReference(blobName);            
-            await blobObj.UploadFromFileAsync(filename);
-            return blobObj.Uri;
-        }
-
-        public async Task<Uri> UploadFile(string containerName, string blobName, string filename) 
-        { 
-            var container = await this.CreateContainerAsync(containerName);
-            var blobObj = container.GetPageBlobReference(blobName);            
-            await blobObj.UploadFromFileAsync(filename);
-            return blobObj.Uri;
-        }     
     }
 }
