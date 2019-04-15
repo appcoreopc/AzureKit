@@ -1,5 +1,7 @@
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
+using Microsoft.WindowsAzure.Storage.File;
+using Microsoft.WindowsAzure.Storage.Queue;
 using System.Threading.Tasks;
 
 namespace AzureKitStorage.Account
@@ -11,9 +13,23 @@ namespace AzureKitStorage.Account
             return CloudStorageAccount.Parse(connection);
         }
 
-        public static async Task<CloudBlobContainer> CreateContainerAsync(this CloudStorageAccount cloudStorageAccount, string containerName)
+        public static async Task<CloudBlobContainer> CreateContainerAsync(this CloudStorageAccount cloudStorageAccount, string queueName)
         {
-            var container = cloudStorageAccount.CreateCloudBlobClient().GetContainerReference(containerName);
+            var container = cloudStorageAccount.CreateCloudBlobClient().GetContainerReference(queueName);
+            await container.CreateIfNotExistsAsync();
+            return container;
+        }
+
+        public static async Task<CloudFileShare> CreateFileStorageAsync(this CloudStorageAccount cloudStorageAccount, string sharedName)
+        {
+            var container = cloudStorageAccount.CreateCloudFileClient().GetShareReference(sharedName);
+            await container.CreateIfNotExistsAsync();
+            return container;
+        }
+
+        public static async Task<CloudQueue> CreateStorageQueuAsync(this CloudStorageAccount cloudStorageAccount, string queueName)
+        {
+            var container = cloudStorageAccount.CreateCloudQueueClient().GetQueueReference(queueName);
             await container.CreateIfNotExistsAsync();
             return container;
         }
