@@ -13,9 +13,9 @@ namespace AzureKitStorage.Account
             return CloudStorageAccount.Parse(connection);
         }
 
-        public static async Task<CloudBlobContainer> CreateContainerAsync(this CloudStorageAccount cloudStorageAccount, string queueName)
+        public static async Task<CloudBlobContainer> CreateBlobAsync(this CloudStorageAccount cloudStorageAccount, string blobName)
         {
-            var container = cloudStorageAccount.CreateCloudBlobClient().GetContainerReference(queueName);
+            var container = cloudStorageAccount.CreateCloudBlobClient().GetContainerReference(blobName);
             await container.CreateIfNotExistsAsync();
             return container;
         }

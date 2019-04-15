@@ -1,4 +1,5 @@
-using System;
+using AzureKitStorage;
+using AzureKitStorage.Account;
 using Xunit;
 
 namespace AzureStorageKit.UnitTest
@@ -8,7 +9,8 @@ namespace AzureStorageKit.UnitTest
         [Fact]
         public void Test1()
         {
-
+            var target = StorageSession.CreateStorageProvider("").CreateBlobAsync("").Result.CreatePageStorage("");
+            var storageProvider = new StorageProvider(target);
         }
     }
 }
