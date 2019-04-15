@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Storage.Queue;
@@ -13,10 +14,16 @@ public class QueueStorageProvider
 
     public async Task SendMessageAsync(CloudQueueMessage message) => await this.cloudQueue.AddMessageAsync(message);
 
-    public async Task<CloudQueueMessage> PeekMessage() => await this.cloudQueue.PeekMessageAsync();
+    public async Task<CloudQueueMessage> PeekMessageAsync() => await this.cloudQueue.PeekMessageAsync();
 
-    public async Task<CloudQueueMessage> GetMessage() => await this.cloudQueue.GetMessageAsync();
+    public async Task<CloudQueueMessage> GetMessageAsync() => await this.cloudQueue.GetMessageAsync();
+
+    public int? GetQueueLength() => this.cloudQueue.ApproximateMessageCount;
+
+    public async Task DeleteMessageAsync(CloudQueueMessage message) => await this.cloudQueue.DeleteMessageAsync(message);
 
     public async Task<IEnumerable<CloudQueueMessage>> GetMessages(int count) => await this.cloudQueue.GetMessagesAsync(count);
+
+    public async Task<IEnumerable<CloudQueueMessage>> GetMessages(int count, TimeSpan? timeout) => await this.cloudQueue.GetMessageAsync(count, timeout. );
 
 }
