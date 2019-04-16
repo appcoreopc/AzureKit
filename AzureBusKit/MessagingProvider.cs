@@ -14,8 +14,8 @@ namespace AzureBusKit
             this.client = client;
         }
 
-        public void ConfigureMessageHandler(Func<Message, CancellationToken, Task> handler, Func<ExceptionReceivedEventArgs, Task>  exceptionReceivedHandler) {
-            this.client.RegisterMessageHandler(handler, exceptionReceivedHandler);
+        public void ConfigureMessageHandler(Func<Message, CancellationToken, Task> messageHandler, Func<ExceptionReceivedEventArgs, Task>  exceptionHandler) {
+            this.client.RegisterMessageHandler(messageHandler, exceptionHandler);
         }
 
         public async Task SendMessageAsync(Message message) 
