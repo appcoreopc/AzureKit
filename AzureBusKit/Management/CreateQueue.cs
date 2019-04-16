@@ -32,4 +32,9 @@ public static class Management {
     public static ResourceManagementClient CreateResourceClient(this TokenCredentials credential) {
         return new ResourceManagementClient(credential);
     }
+
+    public static ServiceBusManagementClient Create(this TokenCredentials credential) {
+        return new ServiceBusManagementClient(credential);
+    }
+
 }
